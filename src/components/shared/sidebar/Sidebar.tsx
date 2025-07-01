@@ -88,7 +88,7 @@ export function Sidebar() {
 
   const sidebarLinks = sidebarItems.map((sidebar) => (
     <a
-      href="#"
+      href={sidebar.href}
       onClick={(event) => event.preventDefault()}
       key={sidebar.label}
       className={classes.collectionLink}

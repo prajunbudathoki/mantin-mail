@@ -6,8 +6,10 @@ import {
   createTheme,
   Button,
 } from "@mantine/core";
-import { Sidebar } from "./components/sidebar/Sidebar";
+import { Sidebar } from "./components/shared/sidebar/Sidebar";
 import { ActionToggle } from "./components/theme/toggle";
+import Inbox from "./components/inbox";
+
 const myColor: MantineColorsTuple = [
   "#ecf4ff",
   "#dce4f5",
@@ -18,8 +20,8 @@ const myColor: MantineColorsTuple = [
   "#5474b4",
   "#44639f",
   "#3a5890",
-  "#2c4b80"
-]
+  "#2c4b80",
+];
 
 const theme = createTheme({
   primaryColor: "myColor",
@@ -30,11 +32,18 @@ const theme = createTheme({
 function App() {
   return (
     <MantineProvider theme={theme}>
-      <Box style={{ display: "flex", height: "100vh" }}>
+      <Box
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          height: "100vh",
+        }}
+      >
         <Sidebar />
-        <Box component="main" style={{ flex: 1, padding: "1rem" }}>
+        {/* <Box component="main" style={{ flex: 1, padding: "1rem" }}>
           <ActionToggle />
-        </Box>
+        </Box> */}
+        <Inbox />
       </Box>
     </MantineProvider>
   );
