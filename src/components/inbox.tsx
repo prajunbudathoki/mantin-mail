@@ -1,5 +1,5 @@
-import { Button } from "@mantine/core";
 import {
+  IconAdjustments,
   IconCrop11,
   IconDotsVertical,
   IconMail,
@@ -8,6 +8,7 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 import { useState } from "react";
+import Messages from "./message/Messages";
 
 const MailType = [
   {
@@ -40,6 +41,9 @@ export default function Inbox() {
             <IconDotsVertical size={"20px"} />
           </div>
         </div>
+        <div className="p-2 hover:bg-gray-100 rounded-full cursor-pointer">
+          <IconAdjustments />
+        </div>
       </div>
       <div className="h-[90vh]">
         <div className="flex items-center gap-1">
@@ -48,8 +52,8 @@ export default function Inbox() {
               key={index}
               className={`flex items-center gap-5 p-4 ${
                 mailTypeSelected === index
-                  ? "border-b-4 border-b-[#0b57d0] text-blue-600"
-                  : "border-b-4 border-b-transparent"
+                  ? "border-b-2 border-b-[#0b57d0] text-blue-600"
+                  : "border-b-2 border-b-transparent"
               } w-52 hover:bg-gray-100`}
               onClick={() => {
                 setMailTypeSelected(index);
@@ -60,6 +64,7 @@ export default function Inbox() {
             </button>
           ))}
         </div>
+        <Messages />
       </div>
     </div>
   );

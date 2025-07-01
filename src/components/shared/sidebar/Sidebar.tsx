@@ -60,14 +60,14 @@ const sidebarItems: SidebarItems[] = [
     href: "/sent",
   },
   {
-    label: "Inbox",
+    label: "Inbox1",
     icon: <IconMail className="h-5 w-5" />,
-    href: "/inbox",
+    href: "/inbox1",
   },
   {
-    label: "Inbox",
+    label: "Inbox2",
     icon: <IconMail className="h-5 w-5" />,
-    href: "/inbox",
+    href: "/inbox2",
   },
 ];
 
