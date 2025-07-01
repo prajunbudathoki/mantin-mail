@@ -10,11 +10,13 @@ import {
   IconUser,
   IconSearch,
   IconPlus,
+  IconPencil,
 } from "@tabler/icons-react";
 import {
   ActionIcon,
   Badge,
   Box,
+  Button,
   Code,
   Group,
   Text,
@@ -25,6 +27,10 @@ import {
 import { UserButton } from "./user-button";
 import classes from "./Sidebar.module.css";
 import type React from "react";
+
+interface SidebarProps {
+  onComposeClick: () => void;
+}
 
 interface SidebarItems {
   label: string;
@@ -71,7 +77,7 @@ const sidebarItems: SidebarItems[] = [
   },
 ];
 
-export function Sidebar() {
+export function Sidebar({ onComposeClick }: SidebarProps) {
   const mainLinks = links.map((link) => (
     <UnstyledButton key={link.label} className={classes.mainLink}>
       <div className={classes.mainLinkInner}>
@@ -105,8 +111,15 @@ export function Sidebar() {
       <div className={classes.section}>
         <UserButton />
       </div>
-
-      <TextInput
+      <Button
+        className="bg-green-400"
+        variant="gradient"
+        onClick={onComposeClick}
+      >
+        <IconPencil size={"20px"} />
+        Compose mail
+      </Button>
+      {/* <TextInput
         placeholder="Search"
         size="xs"
         leftSection={<IconSearch size={12} stroke={1.5} />}
@@ -114,7 +127,7 @@ export function Sidebar() {
         rightSection={<Code className={classes.searchCode}>Ctrl + K</Code>}
         styles={{ section: { pointerEvents: "none" } }}
         mb="sm"
-      />
+      /> */}
       <div className={classes.section}>
         <div className={classes.mainLinks}>{mainLinks}</div>
       </div>
