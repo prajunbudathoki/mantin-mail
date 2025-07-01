@@ -8,10 +8,10 @@ import {
 } from "@mantine/core";
 import { Sidebar } from "./components/shared/sidebar/Sidebar";
 import { ActionToggle } from "./components/theme/toggle";
-import Inbox from "./components/inbox";
+import Inbox from "./pages/inbox";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/layout";
-import Mail from "./components/Mail";
+import Mail from "./pages/Mail";
 
 const myColor: MantineColorsTuple = [
   "#ecf4ff",
@@ -49,6 +49,7 @@ const theme = createTheme({
     myColor,
   },
 });
+
 function App() {
   return (
     <MantineProvider theme={theme}>
