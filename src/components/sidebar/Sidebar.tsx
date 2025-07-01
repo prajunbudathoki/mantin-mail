@@ -1,11 +1,13 @@
 import {
   IconMail,
   IconBrandLine,
-  IconTagsFilled,
-  IconStar,
+  IconTagFilled,
   IconSend,
   IconExclamationCircle,
   IconTrash,
+  IconBulb,
+  IconCheckbox,
+  IconUser,
   IconSearch,
   IconPlus,
 } from "@tabler/icons-react";
@@ -20,53 +22,70 @@ import {
   Tooltip,
   UnstyledButton,
 } from "@mantine/core";
+import { UserButton } from "./user-button";
 import classes from "./Sidebar.module.css";
+import type React from "react";
 
-interface SideBarItem {
-  href: string;
-  icon: React.ReactNode;
+interface SidebarItems {
   label: string;
+  icon: React.ReactNode;
+  href: string;
 }
 
-const sidebarItems: SideBarItem[] = [
+const links = [
+  { icon: IconBulb, label: "Activity", notifications: 3 },
+  { icon: IconCheckbox, label: "Tasks", notifications: 4 },
+  { icon: IconUser, label: "Contacts" },
+];
+
+const sidebarItems: SidebarItems[] = [
   {
     label: "Inbox",
-    href: "/mail/inbox",
-    icon: <IconMail className="w-5 h-5" />,
+    icon: <IconMail className="h-5 w-5" />,
+    href: "/inbox",
   },
   {
-    label: "Drafts",
+    label: "Social",
+    icon: <IconBrandLine className="h-5 w-5" />,
     href: "/social",
-    icon: <IconBrandLine className="w-5 h-5" />,
-  },
-  {
-    label: "Sent Mail",
-    href: "/sent",
-    icon: <IconSend className="w-5 h-5" />,
-  },
-  {
-    label: "Spam",
-    href: "/spam",
-    icon: <IconExclamationCircle className="w-5 h-5" />,
   },
   {
     label: "Labels",
+    icon: <IconTagFilled className="h-5 w-5" />,
     href: "/labels",
-    icon: <IconTagsFilled className="w-5 h-5" />,
   },
   {
-    label: "Trash",
-    href: "/trash",
-    icon: <IconTrash className="w-5 h-5" />,
+    label: "Sent",
+    icon: <IconSend className="h-5 w-5" />,
+    href: "/sent",
   },
   {
-    label: "Starred",
-    href: "/starred",
-    icon: <IconStar className="w-5 h-5" />,
+    label: "Inbox",
+    icon: <IconMail className="h-5 w-5" />,
+    href: "/inbox",
+  },
+  {
+    label: "Inbox",
+    icon: <IconMail className="h-5 w-5" />,
+    href: "/inbox",
   },
 ];
 
 export function Sidebar() {
+  const mainLinks = links.map((link) => (
+    <UnstyledButton key={link.label} className={classes.mainLink}>
+      <div className={classes.mainLinkInner}>
+        <link.icon size={20} className={classes.mainLinkIcon} stroke={1.5} />
+        <span>{link.label}</span>
+      </div>
+      {link.notifications && (
+        <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
+          {link.notifications}
+        </Badge>
+      )}
+    </UnstyledButton>
+  ));
+
   const sidebarLinks = sidebarItems.map((sidebar) => (
     <a
       href="#"
@@ -74,32 +93,31 @@ export function Sidebar() {
       key={sidebar.label}
       className={classes.collectionLink}
     >
-      <Box component="span" mr={9} fz={16}>
+      <Box component="span" mr={12} fz={20}>
         {sidebar.icon}
       </Box>{" "}
       {sidebar.label}
     </a>
   ));
+
   return (
     <nav className={classes.navbar}>
-      {/* <div className={classes.section}>
+      <div className={classes.section}>
         <UserButton />
-      </div> */}
+      </div>
 
       <TextInput
         placeholder="Search"
         size="xs"
-        leftSection={<IconSearch size={12} />}
+        leftSection={<IconSearch size={12} stroke={1.5} />}
         rightSectionWidth={70}
         rightSection={<Code className={classes.searchCode}>Ctrl + K</Code>}
         styles={{ section: { pointerEvents: "none" } }}
         mb="sm"
       />
-
-      {/* <div className={classes.section}>
+      <div className={classes.section}>
         <div className={classes.mainLinks}>{mainLinks}</div>
-      </div> */}
-
+      </div>
       <div className={classes.section}>
         <Group className={classes.collectionsHeader} justify="space-between">
           <Text size="xs" fw={500} c="dimmed">
@@ -107,7 +125,7 @@ export function Sidebar() {
           </Text>
           <Tooltip label="Create collection" withArrow position="right">
             <ActionIcon variant="default" size={18}>
-              <IconPlus size={12} />
+              <IconPlus size={12} stroke={1.5} />
             </ActionIcon>
           </Tooltip>
         </Group>

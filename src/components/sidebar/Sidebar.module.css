@@ -1,5 +1,5 @@
 .navbar {
-  background-color: #202020;
+  background-color: var(--mantine-color-body);
   height: 100vh;
   width: 300px;
   padding: var(--mantine-spacing-md);
@@ -79,7 +79,8 @@
 }
 
 .collectionLink {
-  display: block;
+  display: flex;
+  align-items: center;
   padding: 8px var(--mantine-spacing-xs);
   text-decoration: none;
   border-radius: var(--mantine-radius-sm);
