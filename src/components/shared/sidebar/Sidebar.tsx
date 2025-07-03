@@ -26,6 +26,7 @@ import {
 } from "@mantine/core";
 import { UserButton } from "./user-button";
 import classes from "./Sidebar.module.css";
+import { Link, useLocation } from "react-router-dom";
 import type React from "react";
 
 interface SidebarProps {
@@ -48,7 +49,7 @@ const sidebarItems: SidebarItems[] = [
   {
     label: "Inbox",
     icon: <IconMail className="h-5 w-5" />,
-    href: "/inbox",
+    href: "/",
   },
   {
     label: "Social",
@@ -71,13 +72,15 @@ const sidebarItems: SidebarItems[] = [
     href: "/inbox1",
   },
   {
-    label: "Inbox2",
-    icon: <IconMail className="h-5 w-5" />,
-    href: "/inbox2",
+    label: "Trash",
+    icon: <IconTrash className="h-5 w-5" />,
+    href: "/trash",
   },
 ];
 
 export function Sidebar({ onComposeClick }: SidebarProps) {
+  const location = useLocation();
+  console.log("loc", location);
   const mainLinks = links.map((link) => (
     <UnstyledButton key={link.label} className={classes.mainLink}>
       <div className={classes.mainLinkInner}>
@@ -92,19 +95,24 @@ export function Sidebar({ onComposeClick }: SidebarProps) {
     </UnstyledButton>
   ));
 
-  const sidebarLinks = sidebarItems.map((sidebar) => (
-    <a
-      href={sidebar.href}
-      onClick={(event) => event.preventDefault()}
-      key={sidebar.label}
-      className={classes.collectionLink}
-    >
-      <Box component="span" mr={12} fz={20}>
-        {sidebar.icon}
-      </Box>{" "}
-      {sidebar.label}
-    </a>
-  ));
+  const sidebarLinks = sidebarItems.map((sidebar) => {
+    const isActive = location.pathname === sidebar.href;
+    return (
+      <Link
+        to={sidebar.href}
+        key={sidebar.label}
+        className={`${classes.collectionLink} ${
+          isActive ? classes.activeLink : ""
+        }`}
+        style={isActive ? { backgroundColor: "#2c2c2c", fontWeight: 600 } : {}}
+      >
+        <Box component="span" mr={12} fz={20}>
+          {sidebar.icon}
+        </Box>
+        {sidebar.label}
+      </Link>
+    );
+  });
 
   return (
     <nav className={classes.navbar}>

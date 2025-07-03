@@ -10,7 +10,7 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import Messages from "./message/Messages";
-import { ActionIcon, Box, Divider } from "@mantine/core";
+import { ActionIcon, Divider } from "@mantine/core";
 import { ActionToggle } from "../components/theme/toggle";
 
 const MailType = [

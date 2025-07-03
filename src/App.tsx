@@ -9,6 +9,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/layout";
 import Inbox from "./pages/inbox";
 import Mail from "./pages/Mail";
+import Social from "./pages/Social";
+import Sent from "./pages/Sent";
 
 const myColor: MantineColorsTuple = [
   "#ecf4ff",
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
       {
         path: "/mail/:id",
         element: <Mail />,
+      },
+      {
+        path: "/social",
+        element: <Social />,
+      },
+      {
+        path: "/sent",
+        element: <Sent />,
       },
     ],
   },
