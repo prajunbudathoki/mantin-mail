@@ -5,16 +5,25 @@ import {
   IconTrash,
   IconDotsVertical,
 } from "@tabler/icons-react";
-import { doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../firebase";
 
 const Mail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const params = useParams();
   const [email, setEmail] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
+  const deleteMailById = async (id: string) => {
+    try {
+      await deleteDoc(doc(db, "emails", id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const fetchEmail = async () => {
@@ -56,7 +65,15 @@ const Mail = () => {
           <div className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
             <IconMessageReport size={"20px"} />
           </div>
-          <div className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
+          <div
+            onClick={() => {
+              if (id) {
+                deleteMailById(id);
+                navigate("/");
+              }
+            }}
+            className="p-2 rounded-full hover:bg-gray-100 cursor-pointer"
+          >
             <IconTrash size={"20px"} />
           </div>
           <div className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
