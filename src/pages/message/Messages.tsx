@@ -1,30 +1,41 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Message from "./Message";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../../firebase";
 
+type Email = {
+  id: string;
+  [key: string]: any;
+  message: string;
+  createdAt: {
+    seconds: number;
+  };
+};
+
 const Messages = () => {
+  const [emails, setEmails] = useState<Email[]>([]);
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "emails"), (snapshot) => {
-      const allEmails = snapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      console.log(allEmails);
+    const q = query(collection(db, "emails"), orderBy("createdAt", "desc"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const allEmails = snapshot.docs
+        .filter((doc) => doc.data().createdAt)
+        .map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            message: data.message ?? "",
+            createdAt: data.createdAt,
+          };
+        });
+      setEmails(allEmails);
     });
     return () => unsubscribe();
   }, []);
   return (
     <div>
-      <Message />
-      <Message />
-      <Message />
-      <Message />
-      <Message />
-      <Message />
-      <Message />
-      <Message />
-      <Message />
+      {emails.map((email) => (
+        <Message key={email.id} email={email} />
+      ))}
     </div>
   );
 };
