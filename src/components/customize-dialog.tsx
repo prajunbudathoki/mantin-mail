@@ -7,6 +7,8 @@ import {
   Text,
 } from "@mantine/core";
 import { useState } from "react";
+import { db } from "../../src/firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 interface CustomizeDialogProps {
   opened: boolean;
@@ -27,10 +29,14 @@ export default function CustomizeDialog({
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("clicked");
-    console.log(formData);
+    await addDoc(collection(db, "emails"), {
+      to: formData.to,
+      subject: formData.subject,
+      message: formData.message,
+      createdAt: serverTimestamp(),
+    });
   };
   return (
     <Dialog
