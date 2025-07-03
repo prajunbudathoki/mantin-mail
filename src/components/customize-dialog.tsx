@@ -37,6 +37,11 @@ export default function CustomizeDialog({
       message: formData.message,
       createdAt: serverTimestamp(),
     });
+    setFormData({
+      to: "",
+      subject: "",
+      message: "",
+    });
   };
   return (
     <Dialog
