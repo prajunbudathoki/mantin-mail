@@ -11,6 +11,8 @@ import Inbox from "./pages/inbox";
 import Mail from "./pages/Mail";
 import Social from "./pages/Social";
 import Sent from "./pages/Sent";
+import Trash from "./pages/Trash";
+import { MailOptions } from "./components/mail-options";
 
 const myColor: MantineColorsTuple = [
   "#ecf4ff",
@@ -45,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/sent",
         element: <Sent />,
+      },
+      {
+        path: "/trash",
+        element: <Trash />,
       },
     ],
   },

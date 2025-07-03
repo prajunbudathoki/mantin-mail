@@ -5,7 +5,7 @@ import {
   IconTrash,
   IconDotsVertical,
 } from "@tabler/icons-react";
-import { deleteDoc, doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../firebase";
@@ -13,13 +13,13 @@ import { db } from "../firebase";
 const Mail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const params = useParams();
   const [email, setEmail] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   const deleteMailById = async (id: string) => {
     try {
-      await deleteDoc(doc(db, "emails", id));
+      await updateDoc(doc(db, "emails", id), { trashed: true });
+      console.log(updateDoc);
     } catch (error) {
       console.log(error);
     }
