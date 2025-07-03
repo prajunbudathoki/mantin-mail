@@ -7,6 +7,8 @@ type Email = {
   id: string;
   [key: string]: any;
   message: string;
+  to?: string;
+  subject?: string;
   createdAt: {
     seconds: number;
   };
@@ -24,6 +26,8 @@ const Messages = () => {
           return {
             id: doc.id,
             message: data.message ?? "",
+            subject: data.subject,
+            to: data.to,
             createdAt: data.createdAt,
           };
         });
