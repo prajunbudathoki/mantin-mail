@@ -119,15 +119,6 @@ export function Sidebar({ onComposeClick }: SidebarProps) {
         <IconPencil size={"20px"} />
         Compose mail
       </Button>
-      {/* <TextInput
-        placeholder="Search"
-        size="xs"
-        leftSection={<IconSearch size={12} stroke={1.5} />}
-        rightSectionWidth={70}
-        rightSection={<Code className={classes.searchCode}>Ctrl + K</Code>}
-        styles={{ section: { pointerEvents: "none" } }}
-        mb="sm"
-      /> */}
       <div className={classes.section}>
         <div className={classes.mainLinks}>{mainLinks}</div>
       </div>

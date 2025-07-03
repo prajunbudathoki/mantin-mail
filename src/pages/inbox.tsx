@@ -3,12 +3,15 @@ import {
   IconCrop11,
   IconDotsVertical,
   IconMail,
+  IconMoon,
   IconReload,
   IconTagFilled,
   IconUsers,
 } from "@tabler/icons-react";
 import { useState } from "react";
 import Messages from "./message/Messages";
+import { ActionIcon, Box, Divider } from "@mantine/core";
+import { ActionToggle } from "../components/theme/toggle";
 
 const MailType = [
   {
@@ -41,10 +44,14 @@ export default function Inbox() {
             <IconDotsVertical size={"20px"} />
           </div>
         </div>
-        <div className="p-2 hover:bg-gray-100 rounded-full cursor-pointer">
-          <IconAdjustments />
+        <div className="p-2 flex gap-2">
+          <ActionIcon radius={"md"} size={"lg"} >
+            <IconAdjustments />
+          </ActionIcon>
+          <ActionToggle />
         </div>
       </div>
+      <Divider />
       <div className="h-[90vh]">
         <div className="flex items-center gap-1">
           {MailType.map((item, index) => (

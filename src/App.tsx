@@ -1,8 +1,9 @@
 import {
+  ActionIcon,
   Box,
   createTheme,
   MantineProvider,
-  type MantineColorsTuple
+  type MantineColorsTuple,
 } from "@mantine/core";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/layout";
@@ -43,6 +44,13 @@ const theme = createTheme({
   primaryColor: "myColor",
   colors: {
     myColor,
+  },
+  components: {
+    ActionIcon: {
+      defaultProps: {
+        variant: "default",
+      },
+    },
   },
 });
 

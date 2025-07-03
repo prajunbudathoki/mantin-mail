@@ -5,10 +5,41 @@ import {
   IconTrash,
   IconDotsVertical,
 } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { db } from "../firebase";
 
 const Mail = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [email, setEmail] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEmail = async () => {
+      if (!id) return;
+      const docRef = doc(db, "emails", id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setEmail({ id: docSnap.id, ...docSnap.data() });
+      }
+      setLoading(false);
+    };
+    fetchEmail();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="flex-1 rounded-xl mx-5 flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  const date = email?.createdAt.seconds
+    ? new Date(email.createdAt.seconds * 1000).toLocaleDateString()
+    : "";
   return (
     <div className="flex-1 rounded-xl mx-5">
       <div className="flex items-center justify-between px-4">
@@ -34,21 +65,21 @@ const Mail = () => {
         </div>
       </div>
       <div className="h-[90vh] overflow-y-auto p-4">
-        <div className="flex justify-between bg-white items-center gap-1">
+        <div className="flex justify-between items-center gap-1">
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-medium">Subject</h1>
+            <h1 className="text-xl font-medium">{email.subject}</h1>
             <span className="text-sm bg-gray-200 rounded-md px-2">inbox</span>
           </div>
           <div className="flex-none text-gray-400 my-5 text-sm">
-            <p>10-2020-15</p>
+            <p>{date}</p>
           </div>
         </div>
         <div className="text-gray-500 text-sm">
-          <h1>prajunbudathoki1@gmail.com</h1>
+          <h1>{email.to}</h1>
           <span>to me</span>
         </div>
         <div className="my-10">
-          <p>message</p>
+          <p>{email.message}</p>
         </div>
       </div>
     </div>

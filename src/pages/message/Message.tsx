@@ -14,7 +14,7 @@ interface MessageProps {
 const Message = ({ email }: MessageProps) => {
   const navigate = useNavigate();
   const openMail = () => {
-    navigate(`mail/${email.id}`);
+    navigate(`mail/${email.id}`, { state: { email } });
   };
   return (
     <div
