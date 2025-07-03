@@ -1,4 +1,3 @@
-import React from "react";
 import {
   IconArrowLeft,
   IconArchive,
@@ -32,6 +31,24 @@ const Mail = () => {
           <div className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
             <IconDotsVertical size={"20px"} />
           </div>
+        </div>
+      </div>
+      <div className="h-[90vh] overflow-y-auto p-4">
+        <div className="flex justify-between bg-white items-center gap-1">
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-medium">Subject</h1>
+            <span className="text-sm bg-gray-200 rounded-md px-2">inbox</span>
+          </div>
+          <div className="flex-none text-gray-400 my-5 text-sm">
+            <p>10-2020-15</p>
+          </div>
+        </div>
+        <div className="text-gray-500 text-sm">
+          <h1>prajunbudathoki1@gmail.com</h1>
+          <span>to me</span>
+        </div>
+        <div className="my-10">
+          <p>message</p>
         </div>
       </div>
     </div>

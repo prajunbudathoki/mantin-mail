@@ -6,6 +6,7 @@ import {
   Textarea,
   Text,
 } from "@mantine/core";
+import { useState } from "react";
 
 interface CustomizeDialogProps {
   opened: boolean;
@@ -16,6 +17,21 @@ export default function CustomizeDialog({
   opened,
   onClose,
 }: CustomizeDialogProps) {
+  const [formData, setFormData] = useState({
+    to: "",
+    subject: "",
+    message: "",
+  });
+  const changeHandler = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("clicked");
+    console.log(formData);
+  };
   return (
     <Dialog
       opened={opened}
@@ -24,31 +40,43 @@ export default function CustomizeDialog({
       size="lg"
       radius="md"
     >
-      <Text size="lg" fw={600} mb="sm">
-        New Message
-      </Text>
-      <TextInput
-        label="To"
-        placeholder="recipient@example.com"
-        mb="sm"
-        required
-      />
-
-      <TextInput label="Subject" placeholder="Subject" mb="sm" />
-
-      <Textarea
-        label="Message"
-        placeholder="Write your message here..."
-        autosize
-        minRows={6}
-        mb="md"
-      />
-
-      <Group justify="flex-end">
-        <Button onClick={onClose} className="bg-blue-500">
-          Send
-        </Button>
-      </Group>
+      <form onSubmit={submitHandler}>
+        <Text size="lg" fw={600} mb="sm">
+          New Message
+        </Text>
+        <TextInput
+          label="To"
+          placeholder="recipient@example.com"
+          mb="sm"
+          required
+          name="to"
+          onChange={changeHandler}
+          value={formData.to}
+        />
+        <TextInput
+          label="Subject"
+          placeholder="Subject"
+          name="subject"
+          mb="sm"
+          onChange={changeHandler}
+          value={formData.subject}
+        />
+        <Textarea
+          label="Message"
+          placeholder="Write your message here..."
+          autosize
+          minRows={6}
+          name="message"
+          mb="md"
+          onChange={changeHandler}
+          value={formData.message}
+        />
+        <Group justify="flex-end">
+          <Button type="submit" onClick={onClose} className="bg-blue-500">
+            Send
+          </Button>
+        </Group>
+      </form>
     </Dialog>
   );
 }

@@ -1,16 +1,12 @@
 import {
-  MantineProvider,
-  AppShell,
   Box,
-  type MantineColorsTuple,
   createTheme,
-  Button,
+  MantineProvider,
+  type MantineColorsTuple
 } from "@mantine/core";
-import { Sidebar } from "./components/shared/sidebar/Sidebar";
-import { ActionToggle } from "./components/theme/toggle";
-import Inbox from "./pages/inbox";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/layout";
+import Inbox from "./pages/inbox";
 import Mail from "./pages/Mail";
 
 const myColor: MantineColorsTuple = [
