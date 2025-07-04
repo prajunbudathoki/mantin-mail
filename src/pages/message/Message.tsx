@@ -8,6 +8,7 @@ import {
 import { useNavigate } from "react-router";
 import { Card, Text } from "@mantine/core";
 import { useState } from "react";
+import { formatEmailDate } from "../../utils/formatEmailDate";
 
 interface MessageProps {
   email: {
@@ -42,12 +43,14 @@ const Message = ({ email }: MessageProps) => {
           <IconStar className="w-5 h-5" />
         </div>
         <div className="flex-1">
-          <p className="text-gray-600 max-w-full">{email.message}</p>
+          <p className="text-gray-600 max-w-full">
+            {email.message.slice(0, 150) + "...."}
+          </p>
         </div>
       </div>
       <div className="flex items-center gap-2">
         <p className="text-gray-600 group-hover:hidden">
-          {new Date(email?.createdAt?.seconds * 1000).toUTCString()}
+          {formatEmailDate(email?.createdAt?.seconds)}
         </p>
         <div className="hidden group-hover:flex gap-2 text-gray-500">
           <div className="rounded-full hover:bg-gray-100 cursor-pointer">
@@ -77,6 +80,7 @@ const Message = ({ email }: MessageProps) => {
             left: 0,
             zIndex: 10,
             minWidth: 300,
+            maxWidth: 450,
           }}
         >
           <Card shadow="md" padding={"md"} radius={"md"}>
@@ -87,7 +91,7 @@ const Message = ({ email }: MessageProps) => {
               To: {email.to || "Unknown"}
             </Text>
             <Text size="xs" c="gray" mb={8}>
-              {new Date(email?.createdAt?.seconds * 1000).toLocaleString()}
+              {formatEmailDate(email?.createdAt?.seconds)}
             </Text>
             <Text>{email.message}</Text>
           </Card>
