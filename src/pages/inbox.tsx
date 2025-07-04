@@ -4,7 +4,7 @@ import { MailOptions } from "../components/mail-options";
 import Messages from "./message/Messages";
 import type { FakeEmail } from "../types/FakeEmail";
 import { generateFakeEmails } from "../hooks/useFakeEmail";
-import { saveEmails } from "../utils/localStorage";
+import { ensureFakeEmails, saveEmails } from "../utils/localStorage";
 
 const MailType = [
   {
@@ -24,8 +24,9 @@ const MailType = [
 export default function Inbox() {
   const [mailTypeSelected, setMailTypeSelected] = useState(0);
   useEffect(() => {
-    const fakeEmails: FakeEmail[] = generateFakeEmails(30);
-    saveEmails(fakeEmails);
+    // const fakeEmails: FakeEmail[] = generateFakeEmails(3);
+    // saveEmails(fakeEmails);
+    ensureFakeEmails(3);
   }, []);
   return (
     <div className="flex-1 rounded-xl mx-5">

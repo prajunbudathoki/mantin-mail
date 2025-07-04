@@ -26,7 +26,7 @@ const Message = ({ email }: MessageProps) => {
   const navigate = useNavigate();
   const [showCard, setShowCard] = useState(false);
   const openMail = () => {
-    navigate(`mail/${email.id}`, { state: { email } });
+    navigate(`mail/${email.id}`);
   };
   return (
     <div

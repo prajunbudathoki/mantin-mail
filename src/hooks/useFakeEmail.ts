@@ -1,6 +1,6 @@
 import type { FakeEmail, LabelType } from "../types/FakeEmail";
 import { faker } from "@faker-js/faker";
-import { saveEmails } from "../utils/localStorage";
+import { getEmails, saveEmails } from "../utils/localStorage";
 
 export function generateFakeEmails(count: number): FakeEmail[] {
   const labels: LabelType[] = ["primary", "social", "promotions"];
@@ -22,6 +22,8 @@ export function generateFakeEmails(count: number): FakeEmail[] {
       label: faker.helpers.arrayElement(labels),
     };
   });
-  saveEmails(emails);
+  const existingEmails = getEmails();
+  const allEmails = [...existingEmails, ...emails];
+  saveEmails(allEmails);
   return emails;
 }

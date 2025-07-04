@@ -1,14 +1,13 @@
 import {
-  IconArrowLeft,
   IconArchive,
+  IconArrowLeft,
+  IconDotsVertical,
   IconMessageReport,
   IconTrash,
-  IconDotsVertical,
 } from "@tabler/icons-react";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { db } from "../firebase";
+import { getEmailById } from "../utils/localStorage";
 
 const Mail = () => {
   const navigate = useNavigate();
@@ -16,25 +15,11 @@ const Mail = () => {
   const [email, setEmail] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  const deleteMailById = async (id: string) => {
-    try {
-      await updateDoc(doc(db, "emails", id), { trashed: true });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    const fetchEmail = async () => {
-      if (!id) return;
-      const docRef = doc(db, "emails", id);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setEmail({ id: docSnap.id, ...docSnap.data() });
-      }
-      setLoading(false);
-    };
-    fetchEmail();
+    if (!id) return;
+    const result = getEmailById(id);
+    setEmail(result);
+    setLoading(false);
   }, [id]);
 
   if (loading) {
@@ -44,7 +29,13 @@ const Mail = () => {
       </div>
     );
   }
-
+  if (!email) {
+    return (
+      <div className="flex-1 rounded-xl mx-5 flex items-center justify-center text-red-500">
+        Email not found.
+      </div>
+    );
+  }
   const date = email?.createdAt.seconds
     ? new Date(email.createdAt.seconds * 1000).toLocaleDateString()
     : "";
@@ -64,16 +55,8 @@ const Mail = () => {
           <div className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
             <IconMessageReport size={"20px"} />
           </div>
-          <div
-            onClick={() => {
-              if (id) {
-                deleteMailById(id);
-                navigate("/");
-              }
-            }}
-            className="p-2 rounded-full hover:bg-gray-100 cursor-pointer"
-          >
-            <IconTrash size={"20px"} />
+          <div className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
+            <IconTrash size={"20px"} />{" "}
           </div>
           <div className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
             <IconDotsVertical size={"20px"} />
@@ -83,7 +66,9 @@ const Mail = () => {
       <div className="h-[90vh] overflow-y-auto p-4">
         <div className="flex justify-between items-center gap-1">
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-medium">{email.subject}</h1>
+            <h1 className="text-xl font-medium">
+              {email.subject ?? "No subject"}
+            </h1>
             <span className="text-sm bg-gray-200 rounded-md px-2">inbox</span>
           </div>
           <div className="flex-none text-gray-400 my-5 text-sm">
@@ -91,11 +76,11 @@ const Mail = () => {
           </div>
         </div>
         <div className="text-gray-500 text-sm">
-          <h1>{email.to}</h1>
+          <h1>{email.to ?? "No to"}</h1>
           <span>to me</span>
         </div>
         <div className="my-10">
-          <p>{email.message}</p>
+          <p>{email.message ?? "no message"}</p>
         </div>
       </div>
     </div>
