@@ -1,17 +1,14 @@
 import { useEffect, useState } from "react";
 import Message from "./Message";
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
-import { db } from "../../firebase";
 import type { FakeEmail } from "../../types/FakeEmail";
+import { getEmails } from "../../utils/localStorage";
 
 const Messages = () => {
   const [emails, setEmails] = useState<FakeEmail[]>([]);
+  useEffect(() => {
+    const storedEmails = getEmails();
+    setEmails(storedEmails);
+  }, []);
   // useEffect(() => {
   //   const q = query(
   //     collection(db, "emails"),
