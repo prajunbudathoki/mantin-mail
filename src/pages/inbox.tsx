@@ -1,10 +1,8 @@
 import { IconMail, IconTagFilled, IconUsers } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { MailOptions } from "../components/mail-options";
+import { ensureFakeEmails } from "../utils/localStorage";
 import Messages from "./message/Messages";
-import type { FakeEmail } from "../types/FakeEmail";
-import { generateFakeEmails } from "../hooks/useFakeEmail";
-import { ensureFakeEmails, saveEmails } from "../utils/localStorage";
 
 const MailType = [
   {
@@ -26,7 +24,7 @@ export default function Inbox() {
   useEffect(() => {
     // const fakeEmails: FakeEmail[] = generateFakeEmails(3);
     // saveEmails(fakeEmails);
-    ensureFakeEmails(3);
+    ensureFakeEmails(20);
   }, []);
   return (
     <div className="flex-1 rounded-xl mx-5">

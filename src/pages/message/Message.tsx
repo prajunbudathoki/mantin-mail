@@ -9,12 +9,14 @@ import { useNavigate } from "react-router";
 import { Card, Text } from "@mantine/core";
 import { useState } from "react";
 import { formatEmailDate } from "../../utils/formatEmailDate";
+import { getEmails, saveEmails } from "../../utils/localStorage";
 
 interface MessageProps {
   email: {
     message: string;
     id: string;
     subject?: string;
+    read: boolean;
     to?: string;
     createdAt: {
       seconds: number;
@@ -25,7 +27,16 @@ interface MessageProps {
 const Message = ({ email }: MessageProps) => {
   const navigate = useNavigate();
   const [showCard, setShowCard] = useState(false);
+  const [isRead, setIsRead] = useState(email.read);
   const openMail = () => {
+    if (!isRead) {
+      const emails = getEmails();
+      const updated = emails.map((mail: any) =>
+        mail.id === email.id ? { ...mail, read: true } : mail
+      );
+      saveEmails(updated);
+      setIsRead(true);
+    }
     navigate(`mail/${email.id}`);
   };
   return (
@@ -39,11 +50,18 @@ const Message = ({ email }: MessageProps) => {
         <div className="flex-none  text-gray-300 group-hover:text-[#202020]">
           <IconCrop11 className="w-5 h-5" />
         </div>
-        <div className="flex-none text-gray-300 group-hover:text-[#202020]">
+        {/* <div className="flex-none text-gray-300 group-hover:text-[#202020]">
           <IconStar className="w-5 h-5" />
-        </div>
+        </div> */}
+        {!isRead && (
+          <span className="w-2 h-2 rounded-full bg-blue-500 inline-block" />
+        )}
         <div className="flex-1">
-          <p className="text-gray-600 max-w-full">
+          <p
+            className={`max-w-full ${
+              isRead ? "text-gray-600" : "text-white"
+            }`}
+          >
             {email.message.slice(0, 150) + "...."}
           </p>
         </div>
