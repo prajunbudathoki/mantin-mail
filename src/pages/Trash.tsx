@@ -12,8 +12,9 @@ type Email = {
 const Trash = () => {
   const [emails, setEmails] = useState<Email[]>([]);
 
+  // , where("trashed", "==", true)
   useEffect(() => {
-    const q = query(collection(db, "emails"), where("trashed", "==", true));
+    const q = query(collection(db, "emails"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setEmails(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
     });
@@ -22,7 +23,7 @@ const Trash = () => {
 
   return (
     <div className="w-full">
-        <MailOptions />
+      <MailOptions />
       <h2 className="text-lg font-bold mb-4">Trash</h2>
       {emails.length === 0 && <div>No emails in trash.</div>}
       {emails.map((email) => (

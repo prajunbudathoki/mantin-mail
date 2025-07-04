@@ -80,7 +80,6 @@ const sidebarItems: SidebarItems[] = [
 
 export function Sidebar({ onComposeClick }: SidebarProps) {
   const location = useLocation();
-  console.log("loc", location);
   const mainLinks = links.map((link) => (
     <UnstyledButton key={link.label} className={classes.mainLink}>
       <div className={classes.mainLinkInner}>

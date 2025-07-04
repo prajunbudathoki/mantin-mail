@@ -5,7 +5,7 @@ import {
   IconTrash,
   IconDotsVertical,
 } from "@tabler/icons-react";
-import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../firebase";
@@ -19,7 +19,6 @@ const Mail = () => {
   const deleteMailById = async (id: string) => {
     try {
       await updateDoc(doc(db, "emails", id), { trashed: true });
-      console.log(updateDoc);
     } catch (error) {
       console.log(error);
     }
