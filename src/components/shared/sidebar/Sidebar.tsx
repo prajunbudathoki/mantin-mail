@@ -28,6 +28,7 @@ import { UserButton } from "./user-button";
 import classes from "./Sidebar.module.css";
 import { Link, useLocation } from "react-router-dom";
 import type React from "react";
+import { ensureFakeEmails, getEmails } from "../../../utils/localStorage";
 
 interface SidebarProps {
   onComposeClick: () => void;
@@ -38,9 +39,11 @@ interface SidebarItems {
   icon: React.ReactNode;
   href: string;
 }
+const emailCount = getEmails().filter((e) => !e.archieved && !e.trashed).length;
+console.log(emailCount);
 
 const links = [
-  { icon: IconBulb, label: "Activity", notifications: 3 },
+  { icon: IconBulb, label: "Activity", notifications: 30 },
   { icon: IconCheckbox, label: "Tasks", notifications: 4 },
   { icon: IconUser, label: "Contacts" },
 ];
@@ -109,6 +112,13 @@ export function Sidebar({ onComposeClick }: SidebarProps) {
           {sidebar.icon}
         </Box>
         {sidebar.label}
+        <div className="ml-45">
+          {sidebar.label === "Inbox" && emailCount > 0 && (
+            <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
+              {emailCount}
+            </Badge>
+          )}
+        </div>
       </Link>
     );
   });

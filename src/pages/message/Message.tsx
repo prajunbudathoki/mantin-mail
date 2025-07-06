@@ -42,7 +42,7 @@ const Message = ({ email }: MessageProps) => {
   return (
     <div
       onClick={openMail}
-      className="group relative flex items-start justify-between border-b border-gray-200 px-4 py-3 text-sm hover:cursor-pointer hover:shadow-md"
+      className="group relative flex items-start justify-between border-b w-full border-gray-200 px-4 py-3 text-sm hover:cursor-pointer hover:shadow-md"
       onMouseEnter={() => setShowCard(true)}
       onMouseLeave={() => setShowCard(false)}
     >
@@ -53,17 +53,26 @@ const Message = ({ email }: MessageProps) => {
         {/* <div className="flex-none text-gray-300 group-hover:text-[#202020]">
           <IconStar className="w-5 h-5" />
         </div> */}
-        {!isRead && (
-          <span className="w-2 h-2 rounded-full bg-blue-500 inline-block" />
-        )}
+        <div>
+          {!isRead && (
+            <span className="w-2 h-2 rounded-full bg-blue-500 inline-block" />
+          )}
+        </div>
+        <div
+          className={`${
+            isRead ? "font-normal text-gray-500" : "font-bold text-white"
+          }`}
+        >
+          {email.subject?.slice(0, 14)}
+        </div>
         <div className="flex-1">
-          <p
-            className={`max-w-full ${
-              isRead ? "text-gray-600" : "text-white"
+          <span
+            className={`max-w-full  ${
+              isRead ? "text-gray-400" : "text-gray-100"
             }`}
           >
             {email.message.slice(0, 150) + "...."}
-          </p>
+          </span>
         </div>
       </div>
       <div className="flex items-center gap-2">

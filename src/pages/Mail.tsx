@@ -29,13 +29,6 @@ const Mail = () => {
       </div>
     );
   }
-  if (!email) {
-    return (
-      <div className="flex-1 rounded-xl mx-5 flex items-center justify-center text-red-500">
-        Email not found.
-      </div>
-    );
-  }
   const date = email?.createdAt.seconds
     ? new Date(email.createdAt.seconds * 1000).toLocaleDateString()
     : "";
@@ -63,7 +56,7 @@ const Mail = () => {
           </div>
         </div>
       </div>
-      <div className="h-[90vh] overflow-y-auto p-4">
+      <div className="h-[90vh]  overflow-y-auto p-4">
         <div className="flex justify-between items-center gap-1">
           <div className="flex items-center gap-2">
             <h1 className="text-xl font-medium">
@@ -79,7 +72,7 @@ const Mail = () => {
           <h1>{email.to ?? "No to"}</h1>
           <span>to me</span>
         </div>
-        <div className="my-10">
+        <div className="my-10 w-2xl">
           <p>{email.message ?? "no message"}</p>
         </div>
       </div>
