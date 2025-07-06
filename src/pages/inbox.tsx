@@ -1,7 +1,7 @@
 import { IconMail, IconTagFilled, IconUsers } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { MailOptions } from "../components/mail-options";
-import { ensureFakeEmails } from "../utils/localStorage";
+import { ensureFakeEmails, getEmails } from "../utils/localStorage";
 import Messages from "./message/Messages";
 
 const MailType = [
@@ -21,6 +21,8 @@ const MailType = [
 
 export default function Inbox() {
   const [mailTypeSelected, setMailTypeSelected] = useState(0);
+  const labelMap = ["primary", "promotions", "social"];
+  const selectedLabel = labelMap[mailTypeSelected];
   useEffect(() => {
     // const fakeEmails: FakeEmail[] = generateFakeEmails(3);
     // saveEmails(fakeEmails);
@@ -48,7 +50,7 @@ export default function Inbox() {
             </button>
           ))}
         </div>
-        <Messages />
+        <Messages label={selectedLabel} />
       </div>
     </div>
   );
